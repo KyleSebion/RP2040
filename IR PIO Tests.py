@@ -206,10 +206,10 @@ def blink():
     label('handlebit')
     
     set(x, 21)
-    label('squareBit')
+    label('squarebit')
     set(pins, 1) [17]
     set(pins, 0) [16]
-    jmp(x_dec, 'squareBit')
+    jmp(x_dec, 'squarebit')
     
     out(y, 1) [20]
     jmp(not_y, 'bit0') [31]

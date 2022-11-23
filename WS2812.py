@@ -3,6 +3,7 @@ from rp2 import *
 from utime import *
 import time
 import struct
+import array
 
 def rotate(l, n):
     return l[n:] + l[:n]
@@ -29,7 +30,7 @@ def smproc():
     jmp(x_dec, 'sbit')
     
     
-arr = [0x00_FF_00_00,
+arr = array.array('i', [0x00_FF_00_00,
        0x5A_FF_00_00,
        0xFF_FF_00_00,
        0xFF_00_00_00,
@@ -85,14 +86,7 @@ arr = [0x00_FF_00_00,
        0x00_00_FF_00,
        0x00_5A_FF_00,
        0x00_FF_FF_00,
-       0x00_FF_00_00,
-       0x5A_FF_00_00,
-       0xFF_FF_00_00,
-       0xFF_00_00_00,
-       0xFF_00_FF_00,
-       0x00_00_FF_00,
-       0x00_5A_FF_00,
-       0x00_FF_FF_00]
+       ])
 
 led = Pin(25, Pin.OUT)
 led.value(1)

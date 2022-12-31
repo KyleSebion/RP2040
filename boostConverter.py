@@ -1,25 +1,25 @@
 from machine import Pin, PWM, ADC
 import utime
-led = Pin("LED", Pin.OUT)
+led = Pin(25, Pin.OUT)
 avg = 65535
 N = 30
 
-adc = ADC(Pin(26))
+adc = ADC(Pin(27))
 
-pwm = PWM(Pin(27))
-pwm.freq(30000)
-pwm.duty_u16(0)
+pwm = PWM(Pin(26))
+pwm.freq(80000)
 duty = 0
+pwm.duty_u16(duty)
 
 
 while True:
     avg -= avg // N
     avg += adc.read_u16() // N
     #print(avg)
-    if 15500 - avg > 0:
-        duty = min(duty + 1, 65535)
+    if 40500 - avg > 0:
+        duty = min(duty + 1, 65535 * 8 // 10)
     else:
-        duty = max(duty - 1, 0)
+        duty = max(duty - 1, 65535 * 1 // 10)
         
     pwm.duty_u16(duty)
     #led.toggle()

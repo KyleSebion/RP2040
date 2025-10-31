@@ -1,4 +1,5 @@
-from machine import Pin
+from machine import Pin, WDT
+from uselect import poll, POLLIN
 from sys import stdin
 
 LED_ON = 1
@@ -9,13 +10,20 @@ RELAY_CLOSE = 0
 RELAY_OPEN = 1
 relay = Pin(16, Pin.OUT)
 
+poller = poll()
+poller.register(stdin, POLLIN)
+wdt = WDT(timeout=5000)
+
 print("start")
 while True:
+    wdt.feed()
     if not "line" in globals():
         line = "ON"
     else:
+        if not poller.poll(1000): continue
         line = stdin.readline().strip().upper()
-    if line == "OFF":
+
+    if line == "OFF":    
         led.value(LED_OFF)
         relay.value(RELAY_OPEN)
         state = line
